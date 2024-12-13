@@ -139,7 +139,7 @@ const bookId = route.params.id;
 
 const book = [... JSON.parse(localStorage["books"])].find((book) => bookId == book.id)
 
-const oldBook = ref([... JSON.parse(localStorage["books"])].find((book) => bookId == book.id))
+const bookSave = ref([... JSON.parse(localStorage["books"])].find((book) => bookId == book.id))
 
 
 const currentImage = ref(book.coverImage);
@@ -187,35 +187,35 @@ const editBook = () => {
 const saveBook = () => {
   if (titleInput.value.value.trim() === "") {
     errorMessage.value = "Verify title !";
-    book.title = oldBook.value.title;
+    book.title = bookSave.value.title;
     popMessage(errorMessage);
     return;
   }
   if (authorInput.value.value.trim() === "") {
     errorMessage.value = "Verify author !";
-    book.author = oldBook.value.author;
+    book.author = bookSave.value.author;
     popMessage(errorMessage);
     return;
   }
   if (dateInput.value.value.trim() === "") {
     errorMessage.value = "Verify date !";
-    book.date = oldBook.value.date;
+    book.date = bookSave.value.date;
     popMessage(errorMessage);
     return;
   }
   if (categoryInput.value.value.trim() === "") {
     errorMessage.value = "Verify category !";
-    book.category = oldBook.value.category;
+    book.category = bookSave.value.category;
     popMessage(errorMessage);
     return;
   }
-  oldBook.value = {... book}
-  localStorage["books"] = JSON.stringify([... JSON.parse(localStorage["books"]).filter((book) => book.id != oldBook.value.id), oldBook.value])
+  bookSave.value = {... book}
+  localStorage["books"] = JSON.stringify([... JSON.parse(localStorage["books"]).filter((book) => book.id != bookSave.value.id), bookSave.value])
   isEditing.value = false;
 };
 
 const deleteBook = () => {
-  localStorage["books"] = JSON.stringify([... JSON.parse(localStorage["books"]).filter((book) => book.id != oldBook.value.id)])
+  localStorage["books"] = JSON.stringify([... JSON.parse(localStorage["books"]).filter((book) => book.id != bookSave.value.id)])
   router.push("/")
 };
 </script>
